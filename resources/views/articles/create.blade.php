@@ -16,17 +16,7 @@
                 <textarea class="form-control" name="description" id="exampleTextarea" rows="3" v-model="description" ></textarea>
                 <span class="text-danger" v-text="errors.get('description')"></span>
             </div>
-            <div class="form-group">
-                <div><label for="exampleTextarea">Image</label></div>
-                <input name="image" type="file" id="example-text-input" v-model="image" >
-                <span class="text-danger" v-text="errors.get('image')"></span>
-            </div>
-            <div class="form-group">
-                @foreach( $categories as $category)
-                    <input name="categories[]" type="checkbox" value={{ $category->id }} v-model="categories">{{ $category->name }}
-                @endforeach
-                <div class="text-danger" v-text="errors.get('categories')"></div>
-            </div>
+            <input type="file" v-on:change="onFileChange" class="form-control">
             <input type="submit" value="Создать" class="btn btn-primary">
         </form>
     </div>

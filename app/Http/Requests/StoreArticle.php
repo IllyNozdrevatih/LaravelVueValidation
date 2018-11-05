@@ -26,7 +26,6 @@ class StoreArticle extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'categories' => 'min:1|max:3'
         ];
     }
 }

@@ -26,18 +26,33 @@ class ArticlesController extends Controller
 
     public function store(StoreArticle $request){
         $user = Auth::user();
-        return dd($request->image);
+
+        $exploaded = explode(',',$request->image);
+        $decoded = base64_decode($exploaded[1]);
+
+        if(str_contains($exploaded[0],'jpeg'))
+            $extension = 'jpg';
+        else
+            $extension = 'png';
+
+        $image = str_random().'.'.$extension;
+        $path = public_path().'/'.$image;
+
+        file_put_contents($path,$decoded);
+//        return dd($request->image);
         $title = $request->title;
         $description = $request->description;
-        $categories = $request->categories;
-        $image = $request->file('image')->store('image','public');
+//        $categories = $request->categories;
+//        $imagename = $request->image->getClientOriginalName();
+//        $image = $request->file('image')->store('image','public');
         $article = new Article(compact('title','description','image'));
 //        $article = new Article(compact('title','description'));
+
         $user->articles()->save($article);
-        $article->categories()->attach($categories);
+//        $article->categories()->attach($categories);
 //        return ['massage' => $user->id];
 //        die;
-        return redirect()->route('articles.index');
+//        return redirect()->route('articles.index');
     }
 
     public function edit(Article $article){
